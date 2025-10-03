@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Apply for Admission | Cricket Academy{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Apply for Admission</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label>Full Name</label>
+          <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Email</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Phone Number</label>
+          <input type="text" name="phone" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Date of Birth</label>
+          <input type="date" name="dob" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Address</label>
+          <textarea name="address" rows="3" class="form-control" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Program</label>
+          <select name="program" class="form-control" required>
+            <option value="">Select Program</option>
+            {% for program in programs %}
+            <option value="{{ program.id }}">{{ program.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Submit Admission Form</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

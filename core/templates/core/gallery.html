@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Gallery | Cricket Academy{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h3 class="text-center mb-4">Academy Gallery</h3>
+
+  <div class="row">
+    {% for image in gallery %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img src="{{ image.image.url }}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{ image.title }}">
+        {% if image.title %}
+        <div class="card-body text-center">
+          <h6 class="card-title">{{ image.title }}</h6>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No images in the gallery yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h3 class="text-center">Welcome, {{ user.username }}</h3>
+
+  <div class="mt-4">
+    <h5>📄 Your Admission Info</h5>
+    {% if admission %}
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Name:</strong> {{ admission.name }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ admission.email }}</li>
+        <li class="list-group-item"><strong>Phone:</strong> {{ admission.phone }}</li>
+        <li class="list-group-item"><strong>DOB:</strong> {{ admission.dob }}</li>
+        <li class="list-group-item"><strong>Program:</strong> {{ admission.program.title }}</li>
+        <li class="list-group-item"><strong>Applied On:</strong> {{ admission.date_applied|date:"Y-m-d" }}</li>
+      </ul>
+    {% else %}
+      <p>No admission record found.</p>
+    {% endif %}
+  </div>
+
+  <div class="mt-5">
+    <h5>💰 Fee Records</h5>
+    {% if fees %}
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for fee in fees %}
+          <tr>
+            <td>₹{{ fee.amount }}</td>
+            <td>{{ fee.status }}</td>
+            <td>{{ fee.payment_date|date:"Y-m-d H:i" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No fee records found.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

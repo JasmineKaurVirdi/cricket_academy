@@ -1,0 +1,40 @@
+{% include 'includes/admin_header.html' %}
+
+<h3 class="mb-4">Contact Messages</h3>
+
+<div class="card">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Date Sent</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for msg in messages %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ msg.name }}</td>
+          <td>{{ msg.email }}</td>
+          <td style="white-space: pre-wrap;">{{ msg.message }}</td>
+          <td>{{ msg.date_sent|date:"Y-m-d H:i" }}</td>
+          <td>
+            <a href="{% url 'delete_contact' msg.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this message?');">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center">No messages found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% include 'includes/admin_footer.html' %}

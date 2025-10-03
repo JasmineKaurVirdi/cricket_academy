@@ -1,0 +1,39 @@
+{% include 'includes/admin_header.html' %}
+
+<h3 class="mb-4">Edit Fee Record</h3>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header bg-primary text-white">Edit Fee</div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label>Select Student</label>
+            <select name="admission_id" class="form-control" required>
+              {% for adm in admissions %}
+              <option value="{{ adm.id }}" {% if adm.id == fee.student.id %}selected{% endif %}>{{ adm.name }} ({{ adm.email }})</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label>Amount</label>
+            <input type="number" name="amount" class="form-control" value="{{ fee.amount }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Status</label>
+            <select name="status" class="form-control" required>
+              <option value="Paid" {% if fee.status == 'Paid' %}selected{% endif %}>Paid</option>
+              <option value="Pending" {% if fee.status == 'Pending' %}selected{% endif %}>Pending</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Update Fee</button>
+          <a href="{% url 'manage_fees' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'includes/admin_footer.html' %}

@@ -1,0 +1,47 @@
+{% include 'includes/admin_header.html' %}
+
+<h3 class="mb-4">Manage Gallery</h3>
+
+<div class="row">
+  <!-- Add Image Form -->
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header bg-dark text-white">Upload New Image</div>
+      <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label>Title</label>
+            <input type="text" name="title" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label>Select Image</label>
+            <input type="file" name="image" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-dark">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Image Grid -->
+  <div class="col-md-8">
+    <div class="row">
+      {% for item in gallery %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+          <img src="{{ item.image.url }}" class="card-img-top" style="height:200px; object-fit:cover;" alt="...">
+          <div class="card-body text-center">
+            <h6>{{ item.title }}</h6>
+            <a href="{% url 'delete_gallery_image' item.id %}" class="btn btn-sm btn-danger mt-2" onclick="return confirm('Delete this image?')">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p>No images uploaded yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% include 'includes/admin_footer.html' %}

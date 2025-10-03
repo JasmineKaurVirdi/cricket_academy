@@ -1,0 +1,76 @@
+{% include 'includes/admin_header.html' %}
+
+<h3 class="mb-4">Manage Programs</h3>
+
+<div class="row">
+  <!-- Add Program Form -->
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header bg-dark text-white">Add New Program</div>
+      <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label>Title</label>
+            <input type="text" name="title" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label>Description</label>
+            <textarea name="description" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label>Duration</label>
+            <input type="text" name="duration" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label>Upload Picture</label>
+            <input type="file" name="picture" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-dark">Add Program</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Program List -->
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header bg-dark text-white">Program List</div>
+      <div class="card-body">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Picture</th>
+              <th>Title</th>
+              <th>Duration</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for program in programs %}
+            <tr>
+              <td>
+                {% if program.picture %}
+                  <img src="{{ program.picture.url }}" width="60" height="60" style="object-fit: cover;">
+                {% else %}
+                  N/A
+                {% endif %}
+              </td>
+              <td>{{ program.title }}</td>
+              <td>{{ program.duration }}</td>
+              <td>
+                <a href="{% url 'edit_program' program.id %}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="{% url 'delete_program' program.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete?');">Delete</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No programs found.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'includes/admin_footer.html' %}

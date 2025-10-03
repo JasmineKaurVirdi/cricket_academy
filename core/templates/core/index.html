@@ -1,0 +1,116 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home | Cricket Academy{% endblock %}
+
+{% block content %}
+<style>
+    .gallery-img {
+        height: 300px;
+        border-radius: 10px;
+        width: 100%;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero text-center">
+    <div style="background: url('https://unsplash.com/photos/a-group-of-men-playing-a-game-of-cricket-ix3zspDk58E');
+         background-position:center;
+         background-size: cover;
+         background-repeat: no-repeat;
+         height:500px;
+         display:flex; 
+         flex-direction:column; 
+         justify-content:center;">
+        <h1 class="display-4 fw-bold text-shadow">Welcome to AP Cricket Academy</h1>
+        <p class="lead">Train with the best. Play like the best.</p>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="container mt-5">
+    <h2 class="text-center">About Our Academy</h2>
+    <p class="text-center">
+        AP Cricket Academy is dedicated to nurturing young talent and preparing them for competitive cricket. With
+        state-of-the-art facilities, professional coaches, and a focus on discipline and performance, we are proud to be
+        one of the finest cricket training academies in the region.
+    </p>
+</section>
+
+<section class="container mt-5">
+    <h2 class="text-center">Our Top Programs</h2>
+    <div class="row">
+        {% for program in programs %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ program.picture.url }}" class="card-img-top" style="height:250px; object-fit:cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ program.title }}</h5>
+                    <p class="card-text">{{ program.description|truncatechars:100 }}</p>
+                    <span class="badge bg-info">{{ program.duration }}</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No programs found.</p>
+        {% endfor %}
+    </div>
+</section>
+
+
+<section class="container mt-5">
+    <h2 class="text-center">Our Expert Coaches</h2>
+    <div class="row">
+        {% for coach in coaches %}
+        <div class="col-md-4 text-center mb-4">
+            <img src="{{ coach.image.url }}" class="rounded-circle mb-3" width="150" height="150"
+                style="object-fit:cover;">
+            <h5>{{ coach.name }}</h5>
+            <small>{{ coach.bio|truncatechars:80 }}</small>
+        </div>
+        {% empty %}
+        <p class="text-center">No coaches found.</p>
+        {% endfor %}
+    </div>
+</section>
+
+
+<section class="container mt-5">
+    <h2 class="text-center">Gallery</h2>
+    <div class="row">
+        {% for image in gallery %}
+        <div class="col-md-4 mb-4">
+            <img src="{{ image.image.url }}" class="gallery-img" alt="{{ image.title }}">
+        </div>
+        {% empty %}
+        <p class="text-center">No gallery images available.</p>
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- CTA -->
+<!-- <section class="bg-dark text-white text-center p-5 mt-5">
+    <h2>Ready to Join the Squad?</h2>
+    <p>Enroll today and take the first step towards a professional cricket career.</p>
+    <a href="{% url 'admission_form' %}" class="btn btn-warning btn-lg mt-2">Apply for Admission</a>
+    
+</section> -->
+
+<section class="bg-dark text-white text-center p-5 mt-5">
+    <h2>Ready to Join the Squad?</h2>
+    <p>Enroll today and take the first step towards a professional cricket career.</p>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'admission_form' %}" class="btn btn-warning btn-lg mt-2">
+            Apply for Admission
+        </a>
+    {% else %}
+        <a href="{% url 'login' %}?next={% url 'admission_form' %}" class="btn btn-warning btn-lg mt-2">
+            Log In to Apply
+        </a>
+        <p class="mt-2"><small>New user? Please <a href="{% url 'register' %}">register</a> first.</small></p>
+    {% endif %}
+
+</section>
+
+{% endblock %}

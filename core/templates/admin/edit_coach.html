@@ -1,0 +1,51 @@
+{% include 'includes/admin_header.html' %}
+
+<h3 class="mb-4">Edit Coach</h3>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header bg-primary text-white">Update Coach Details</div>
+      <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" value="{{ coach.name }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Gender</label>
+            <select name="gender" class="form-control" required>
+              <option value="Male" {% if coach.gender == 'Male' %}selected{% endif %}>Male</option>
+              <option value="Female" {% if coach.gender == 'Female' %}selected{% endif %}>Female</option>
+              <option value="Other" {% if coach.gender == 'Other' %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label>Contact Number</label>
+            <input type="text" name="contact_number" class="form-control" value="{{ coach.contact_number }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" value="{{ coach.email }}" required>
+          </div>
+          <div class="mb-3">
+            <label>Bio</label>
+            <textarea name="bio" class="form-control" rows="3" required>{{ coach.bio }}</textarea>
+          </div>
+          <div class="mb-3">
+            <label>Update Image</label>
+            <input type="file" name="image" class="form-control">
+            {% if coach.image %}
+              <img src="{{ coach.image.url }}" class="mt-2" width="100" height="100" style="object-fit:cover;">
+            {% endif %}
+          </div>
+          <button type="submit" class="btn btn-primary">Update Coach</button>
+          <a href="{% url 'manage_coaches' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'includes/admin_footer.html' %}

@@ -1,0 +1,84 @@
+{% include 'includes/admin_header.html' %}
+
+<h3 class="mb-4">Manage Student Fees</h3>
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+
+<div class="row">
+    <!-- Fee Entry Form -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-dark text-white">Add Fee Record</div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label>Select Student</label>
+                        <select name="admission_id" class="form-control" required>
+                            <option value="">-- Select --</option>
+                            {% for adm in admissions %}
+                            <option value="{{ adm.id }}">{{ adm.name }} ({{ adm.email }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Amount</label>
+                        <input type="number" name="amount" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <select name="status" class="form-control" required>
+                            <option value="Paid">Paid</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Add Fee</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fee Records Table -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-dark text-white">Fee Records</div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fee in fees %}
+                        <tr>
+                            <td>{{ fee.student.name }}</td>
+                            <td>₹{{ fee.amount }}</td>
+                            <td>{{ fee.status }}</td>
+                            <td>{{ fee.payment_date|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <a href="{% url 'edit_fee' fee.id %}" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="{% url 'delete_fee' fee.id %}" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Delete this fee record?');">Delete</a>
+                            </td>
+
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4">No fee records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'includes/admin_footer.html' %}

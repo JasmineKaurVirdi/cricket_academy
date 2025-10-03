@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block title %}All Programs | Cricket Academy{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h3 class="text-center mb-4">Our Cricket Training Programs</h3>
+
+  <div class="row">
+    {% for program in programs %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img src="{{ program.picture.url }}" class="card-img-top" style="height:250px; object-fit:cover;">
+        <div class="card-body">
+          <h5 class="card-title">{{ program.title }}</h5>
+          <p class="card-text">{{ program.description }}</p>
+          <span class="badge bg-primary">Duration : {{ program.duration }} Months</span>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No programs available at the moment.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
