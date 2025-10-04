@@ -88,9 +88,3 @@ python manage.py runserver
 Admin panel: http://127.0.0.1:8000/admin/
 
 Core/student area: http://127.0.0.1:8000/
-
-
-***Author***
-* Name: Jasmine Kaur  
-* LinkedIn: (https://www.linkedin.com/in/jasminekaurvirdee)  
-* GitHub: (https://github.com/JasmineKaurVirdi)
