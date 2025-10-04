@@ -4,8 +4,12 @@ db.sqlite3
 # Ignore environment file
 .env
 
-# Ignore Python cache
+#Python
+*.pyc
 __pycache__/
-*.pyc 
-*.pyo
-*.pyd
+
+#VS Code settings
+.vscode/
+
+#Django stuff
+*.log
