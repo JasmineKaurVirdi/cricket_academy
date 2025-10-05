@@ -48,7 +48,7 @@ Follow these steps to set up the CricketAcademy project locally:
 
 1. *Clone the repository:*
 ```bash
-git clone https://github.com/JasmineKaurVirdi/cricket_academy.git
+git clone https://github.com/yourusername/cricket_academy.git
 
 2. Navigate to the project folder:
 
@@ -98,7 +98,6 @@ Create a new branch
 Make changes and commit
 
 Open a Pull Request
-
 
 📧 Created By
 
